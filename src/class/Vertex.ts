@@ -1,32 +1,53 @@
+import Edge from './Edge'
+
 export default class Vertex {
+  #id: number
   #name: string
-  #depth: number
-  #links: Vertex[]
+  #edges: Edge[]
+  #outgoing: Boolean
 
-  constructor(name: string) {
+  constructor(id: number, name: string, outgoing: boolean) {
+    this.#id = id
     this.#name = name
-    this.#depth = 0
-    this.#links = []
+    this.#edges = []
+    this.#outgoing = outgoing
   }
 
-  set depth(value: number) {
-    this.#depth = value
+  get edges(): Edge[] {
+    return this.#edges
   }
 
-  get depth() {
-    return this.#depth
+  get id(): number {
+    return this.#id
   }
 
-  get name() {
+  get name(): string {
     return this.#name
   }
 
-  get links() {
-    return this.#links
+  get outgoing() {
+    return this.#outgoing
   }
 
-  linkedTo(vertex: Vertex) {
-    vertex.depth = this.#depth + 1
-    this.#links.push(vertex)
+  bind(vertex: Vertex, weight: number = 1): void {
+    this.#edges.push(new Edge(this, vertex, weight))
+  }
+
+  unbind(vertex: Vertex): void {
+    this.#edges = this.#edges.filter((edge) => edge.to !== vertex)
+  }
+
+  equals(vertex: Vertex): boolean {
+    return this.id === vertex.id
+  }
+
+  findEdgeWith(to: Vertex): Edge | null {
+    return this.edges.find((edge) => edge.to === to) ?? null
+  }
+
+  toString() {
+    const edges = this.#edges.map((e) => e.toString())
+    const str = edges.length ? ` (edges: ${edges.join(', ')})` : ''
+    return `${this.name} (${this.outgoing})${str}`
   }
 }

@@ -1,7 +1,8 @@
 import Vertex from '../class/Vertex'
 import { FSCallback } from '../types'
 
-export default function dfs(vertex: Vertex, callback: FSCallback) {
+export default function dfs(vertex: Vertex | null, callback: FSCallback) {
+  if (vertex === null) throw new Error('"vertex" must not be null')
   _dfs(vertex, callback, [], null)
 }
 
@@ -16,7 +17,7 @@ function _dfs(
     if (callback(vertex, previousVertex) === false) return
   }
 
-  for (let currentVertex of vertex.links) {
-    _dfs(currentVertex, callback, visited, vertex)
+  for (let edge of vertex.edges) {
+    _dfs(edge.to, callback, visited, vertex)
   }
 }

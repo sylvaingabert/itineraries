@@ -1,7 +1,8 @@
 import Vertex from '../class/Vertex'
 import { FSCallback } from '../types'
 
-export default function bfs(vertex: Vertex, callback: FSCallback) {
+export default function bfs(vertex: Vertex | null, callback: FSCallback) {
+  if (vertex === null) throw new Error('"vertex" must not be null')
   _bfs([vertex], callback, [], null)
 }
 
@@ -26,6 +27,6 @@ function _bfs(
 
 function aggregateNextVertices(vertices: Vertex[]) {
   return vertices.reduce((acc, current) => {
-    return [...acc, ...current.links]
+    return [...acc, ...current.edges.map(({ to }) => to)]
   }, [] as Vertex[])
 }

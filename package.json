@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx src/index.ts"
+    "dev": "tsx src/index.ts",
+    "test": "vitest run"
   },
   "author": "",
   "license": "ISC",
@@ -12,6 +13,7 @@
     "@types/node": "^25.6.0",
     "prettier": "3.8.1",
     "tsx": "^4.21.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.6"
   }
 }
